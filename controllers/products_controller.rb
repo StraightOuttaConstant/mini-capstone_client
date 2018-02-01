@@ -30,14 +30,17 @@ module ProductsController
 
   def products_create_action
     client_params = products_new_form
-    json_data = post_request("/products", client_params)
+    # json_data = post_request("/products", client_params)
+    response = Unirest.post("http://localhost:3000/products", parameters: client_params)
 
-    if !json_data["errors"]
-      product = Product.new(json_data)
+    if response.code == 200
+      product = Product.new(response.body)
       products_show_view(product)
-    else
-      errors = json_data["errors"]
+    elsif response.code == 422
+      errors = response.body["errors"]
       products_errors_view(errors)
+    elsif response.code == 401
+      puts JSON.pretty_generate(response.body)
     end
   end
 
