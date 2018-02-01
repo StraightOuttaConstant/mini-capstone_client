@@ -52,9 +52,6 @@ module ProductsViews
     print "Price: "
     client_params[:price] = gets.chomp
 
-    print "Image Url: "
-    client_params[:image_url] = gets.chomp
-
     print "Supplier Id: "
     client_params[:supplier_id] = gets.chomp
 
@@ -72,9 +69,6 @@ module ProductsViews
 
     print "Price (#{product.price}): "
     client_params[:price] = gets.chomp
-
-    print "Image Url (#{product.image_url}): "
-    client_params[:image_url] = gets.chomp
 
     print "Supplier Id (#{product.supplier_id}): "
     client_params[:supplier_id] = gets.chomp

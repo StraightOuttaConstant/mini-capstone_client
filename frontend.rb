@@ -49,8 +49,12 @@ class Frontend
       elsif input_option == "5"
         products_destroy_action
       elsif input_option == "6"
-        orders_hashs = get_request("/orders")
-        puts JSON.pretty_generate(orders_hashs)
+        response = Unirest.get("http://localhost:3000/orders")
+        if response.code == 200
+          puts JSON.pretty_generate(response.body)
+        elsif response.code == 401
+          puts "You don't have a list of orders until you sign in, Jerk"
+        end
       elsif input_option == "signup"
         puts "Signup!"
         puts
