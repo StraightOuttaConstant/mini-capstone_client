@@ -86,12 +86,24 @@ class Frontend
         carted_products = response.body
         puts JSON.pretty_generate(carted_products)
 
-        puts "Press enter to continue, or press 'o' to place the order"
+        puts "Press enter to continue,"
+        puts "or press 'o' to place the order"
+        puts "or press 'r' to remove a product"
 
-        if gets.chomp == 'o'
+        sub_option = gets.chomp
+
+        if sub_option == 'o'
           response = Unirest.post('http://localhost:3000/orders')
           order_hash = response.body
           puts JSON.pretty_generate(order_hash)
+        elsif sub_option == 'r'
+          carted_products.each do |carted_product|
+            puts "[#{carted_product["id"]}] #{carted_product["product"]["name"]}"
+          end
+          print "enter the carted product id to remove: "
+          remove_id = gets.chomp
+          response = Unirest.delete("http://localhost:3000/carted_products/#{remove_id}")
+          puts JSON.pretty_generate(response.body)
         end
       elsif input_option == "signup"
         puts "Signup!"
